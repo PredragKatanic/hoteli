@@ -2,6 +2,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routes import users, rooms, reservations, auth, categories, overview
 from .config import settings
+from .models import Base
+from .database import engine
 import uvicorn
 
 app = FastAPI(
@@ -10,6 +12,9 @@ app = FastAPI(
     version="1.0.0",
     debug=settings.DEBUG
 )
+
+# Create all database tables
+Base.metadata.create_all(bind=engine)
 
 # CORS middleware configuration
 app.add_middleware(
