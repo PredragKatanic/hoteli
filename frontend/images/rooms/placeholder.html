@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Placeholders for Hotel Europe</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+        }
+        .placeholder-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+        .placeholder {
+            width: 300px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            border-radius: 8px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+        .placeholder span {
+            position: relative;
+            z-index: 2;
+            padding: 10px;
+        }
+        #hero-bg {
+            background: linear-gradient(45deg, #1a4b84, #346fa8);
+            width: 500px;
+            height: 300px;
+        }
+        #room1 {
+            background: linear-gradient(45deg, #346fa8, #5d9ced);
+        }
+        #room2 {
+            background: linear-gradient(45deg, #1a4b84, #346fa8);
+        }
+        #room3 {
+            background: linear-gradient(45deg, #0a3562, #1a4b84);
+        }
+        #amenity1 {
+            background: linear-gradient(45deg, #e8c547, #f8d967);
+            color: #333;
+        }
+        #amenity2 {
+            background: linear-gradient(45deg, #d4b037, #e8c547);
+            color: #333;
+        }
+        #amenity3 {
+            background: linear-gradient(45deg, #c09b27, #d4b037);
+            color: #333;
+        }
+        #amenity4 {
+            background: linear-gradient(45deg, #ac8717, #c09b27);
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="placeholder-container">
+        <div id="hero-bg" class="placeholder">
+            <span>Hero Background (Hotel Europe - Luxury)</span>
+        </div>
+        <div id="room1" class="placeholder">
+            <span>Standard Room - Hotel Europe</span>
+        </div>
+        <div id="room2" class="placeholder">
+            <span>Deluxe Room - Hotel Europe</span>
+        </div>
+        <div id="room3" class="placeholder">
+            <span>Suite - Hotel Europe</span>
+        </div>
+        <div id="amenity1" class="placeholder">
+            <span>Pool - Hotel Europe</span>
+        </div>
+        <div id="amenity2" class="placeholder">
+            <span>Restaurant - Hotel Europe</span>
+        </div>
+        <div id="amenity3" class="placeholder">
+            <span>Spa - Hotel Europe</span>
+        </div>
+        <div id="amenity4" class="placeholder">
+            <span>Fitness Center - Hotel Europe</span>
+        </div>
+    </div>
+</body>
+</html> 

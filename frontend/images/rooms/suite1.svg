@@ -1,0 +1,73 @@
+<svg width="700" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#996515;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d4af37;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="windowGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#87ceeb;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1e90ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="700" height="500" fill="url(#bgGradient)" />
+  
+  <!-- Floor -->
+  <rect x="50" y="400" width="600" height="50" fill="#8b4513" />
+  <line x1="50" y1="400" x2="650" y2="400" stroke="#000" stroke-width="1" />
+  
+  <!-- Wall Panels -->
+  <rect x="50" y="50" width="600" height="350" fill="#f8f8f8" />
+  
+  <!-- Wall decorations -->
+  <rect x="100" y="100" width="200" height="120" fill="#f5f5dc" stroke="#d4af37" stroke-width="4" />
+  <rect x="400" y="100" width="200" height="120" fill="#f5f5dc" stroke="#d4af37" stroke-width="4" />
+  
+  <!-- Panoramic Window -->
+  <rect x="50" y="100" width="600" height="200" rx="5" fill="url(#windowGradient)" opacity="0.3" />
+  
+  <!-- Luxury king bed -->
+  <rect x="200" y="300" width="300" height="150" rx="10" fill="#fff" stroke="#d4af37" stroke-width="4" />
+  <rect x="200" y="300" width="300" height="50" rx="10" fill="#996515" />
+  <rect x="210" y="350" width="280" height="90" fill="#f8f8f8" stroke="#d4af37" stroke-width="1" />
+  
+  <!-- Pillows -->
+  <rect x="220" y="310" width="60" height="35" rx="5" fill="#fff" stroke="#d4af37" stroke-width="1" />
+  <rect x="290" y="310" width="60" height="35" rx="5" fill="#fff" stroke="#d4af37" stroke-width="1" />
+  <rect x="360" y="310" width="60" height="35" rx="5" fill="#fff" stroke="#d4af37" stroke-width="1" />
+  <rect x="430" y="310" width="60" height="35" rx="5" fill="#fff" stroke="#d4af37" stroke-width="1" />
+  
+  <!-- Side tables -->
+  <rect x="150" y="320" width="40" height="80" fill="#996515" />
+  <rect x="510" y="320" width="40" height="80" fill="#996515" />
+  
+  <!-- Luxury lamps -->
+  <rect x="155" y="305" width="30" height="15" fill="#d4af37" />
+  <rect x="165" y="280" width="10" height="25" fill="#d4af37" />
+  <ellipse cx="170" cy="260" rx="20" ry="25" fill="#f5f5dc" stroke="#d4af37" />
+  
+  <rect x="515" y="305" width="30" height="15" fill="#d4af37" />
+  <rect x="525" y="280" width="10" height="25" fill="#d4af37" />
+  <ellipse cx="530" cy="260" rx="20" ry="25" fill="#f5f5dc" stroke="#d4af37" />
+  
+  <!-- Chandelier -->
+  <path d="M350,50 L350,100" stroke="#d4af37" stroke-width="2" />
+  <ellipse cx="350" cy="120" rx="50" ry="20" fill="none" stroke="#d4af37" stroke-width="2" />
+  <path d="M310,115 L310,130" stroke="#d4af37" stroke-width="1" />
+  <path d="M330,115 L330,135" stroke="#d4af37" stroke-width="1" />
+  <path d="M350,115 L350,140" stroke="#d4af37" stroke-width="1" />
+  <path d="M370,115 L370,135" stroke="#d4af37" stroke-width="1" />
+  <path d="M390,115 L390,130" stroke="#d4af37" stroke-width="1" />
+  
+  <circle cx="310" cy="132" r="3" fill="#f5f5dc" />
+  <circle cx="330" cy="137" r="3" fill="#f5f5dc" />
+  <circle cx="350" cy="142" r="3" fill="#f5f5dc" />
+  <circle cx="370" cy="137" r="3" fill="#f5f5dc" />
+  <circle cx="390" cy="132" r="3" fill="#f5f5dc" />
+  
+  <!-- Suite Text -->
+  <rect x="0" y="430" width="700" height="70" fill="rgba(0,0,0,0.5)" />
+  <text x="350" y="475" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Luxury Suite</text>
+</svg> 

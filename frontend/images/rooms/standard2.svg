@@ -1,0 +1,58 @@
+<svg width="700" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a4b84;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#346fa8;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="700" height="500" fill="url(#bgGradient)" />
+  
+  <!-- Bathroom tiles -->
+  <rect x="50" y="50" width="600" height="350" fill="#f5f5f5" />
+  
+  <!-- Draw tiles -->
+  <g fill="none" stroke="#e0e0e0" stroke-width="1">
+    <path d="M50,100 L650,100" />
+    <path d="M50,150 L650,150" />
+    <path d="M50,200 L650,200" />
+    <path d="M50,250 L650,250" />
+    <path d="M50,300 L650,300" />
+    <path d="M50,350 L650,350" />
+    <path d="M100,50 L100,400" />
+    <path d="M150,50 L150,400" />
+    <path d="M200,50 L200,400" />
+    <path d="M250,50 L250,400" />
+    <path d="M300,50 L300,400" />
+    <path d="M350,50 L350,400" />
+    <path d="M400,50 L400,400" />
+    <path d="M450,50 L450,400" />
+    <path d="M500,50 L500,400" />
+    <path d="M550,50 L550,400" />
+    <path d="M600,50 L600,400" />
+  </g>
+  
+  <!-- Sink -->
+  <ellipse cx="150" cy="150" rx="60" ry="40" fill="white" stroke="#ddd" stroke-width="2" />
+  <rect x="145" y="150" width="10" height="30" fill="#d3d3d3" />
+  
+  <!-- Mirror -->
+  <rect x="90" y="70" width="120" height="70" fill="#e6e6fa" stroke="#ccc" stroke-width="2" />
+  
+  <!-- Shower -->
+  <rect x="450" y="70" width="150" height="150" fill="#e6e6fa" stroke="#ccc" stroke-width="2" />
+  <line x1="450" y1="70" x2="600" y2="70" stroke="#a9a9a9" stroke-width="4" />
+  <line x1="450" y1="70" x2="450" y2="220" stroke="#a9a9a9" stroke-width="4" />
+  <line x1="600" y1="70" x2="600" y2="220" stroke="#a9a9a9" stroke-width="4" />
+  <circle cx="525" cy="90" r="10" fill="#d3d3d3" />
+  
+  <!-- Bathtub -->
+  <rect x="130" y="250" width="200" height="100" rx="10" fill="white" stroke="#ccc" stroke-width="2" />
+  <circle cx="310" cy="280" r="10" fill="#d3d3d3" />
+  
+  <!-- Standard Room Bathroom Text -->
+  <rect x="0" y="430" width="700" height="70" fill="rgba(0,0,0,0.5)" />
+  <text x="350" y="475" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white" text-anchor="middle">Standard Room - Bathroom</text>
+</svg> 

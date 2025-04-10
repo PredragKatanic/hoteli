@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy import func
-from models import User, Room, Reservation, Category
-from database import get_db
-from auth import get_current_active_user
+import models, database, auth
 from pydantic import BaseModel
 from typing import List
 from datetime import datetime, timedelta
@@ -31,31 +29,31 @@ class OverviewData(BaseModel):
 
 @router.get("/", response_model=OverviewData)
 async def get_overview(
-    current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db)
+    current_user: models.User = Depends(auth.get_current_active_user),
+    db: Session = Depends(database.get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
     # Get total rooms count
-    total_rooms = db.query(func.count(Room.id)).scalar()
+    total_rooms = db.query(func.count(models.Room.id)).scalar()
     
     # Get active reservations count (confirmed and not completed)
-    active_reservations = db.query(func.count(Reservation.id)).filter(
-        Reservation.status.in_(["confirmed", "pending"])
+    active_reservations = db.query(func.count(models.Reservation.id)).filter(
+        models.Reservation.status.in_(["confirmed", "pending"])
     ).scalar()
     
     # Get total users count
-    total_users = db.query(func.count(User.id)).scalar()
+    total_users = db.query(func.count(models.User.id)).scalar()
     
     # Get recent reservations (last 5)
     recent_reservations_query = db.query(
-        Reservation,
-        Room.room_number
+        models.Reservation,
+        models.Room.room_number
     ).join(
-        Room, Reservation.room_id == Room.id
+        models.Room, models.Reservation.room_id == models.Room.id
     ).order_by(
-        Reservation.created_at.desc()
+        models.Reservation.created_at.desc()
     ).limit(5).all()
     
     recent_reservations = []

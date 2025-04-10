@@ -1,9 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List, Optional
-from models import Room, User, Reservation
-from database import get_db
-from auth import get_current_active_user
+import models, database, auth
 from config import settings
 from pydantic import BaseModel
 
@@ -45,8 +43,8 @@ class Room(RoomBase):
 @router.post("/", response_model=Room)
 def create_room(
     room: RoomCreate,
-    current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db)
+    current_user: models.User = Depends(auth.get_current_active_user),
+    db: Session = Depends(database.get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
@@ -62,7 +60,7 @@ def create_room(
     if "has_minibar" not in room_dict:
         room_dict["has_minibar"] = True
     
-    db_room = Room(**room_dict)
+    db_room = models.Room(**room_dict)
     db.add(db_room)
     db.commit()
     db.refresh(db_room)
@@ -93,13 +91,13 @@ def read_rooms(
     check_in: Optional[str] = None,
     check_out: Optional[str] = None,
     guests: Optional[int] = None,
-    db: Session = Depends(get_db)
+    db: Session = Depends(database.get_db)
 ):
-    query = db.query(Room)
+    query = db.query(models.Room)
     
     # Apply filters if provided
     if category_id:
-        query = query.filter(Room.category_id == category_id)
+        query = query.filter(models.Room.category_id == category_id)
     
     # Skip and limit for pagination
     rooms = query.offset(skip).limit(limit).all()
@@ -123,8 +121,8 @@ def read_rooms(
     return rooms
 
 @router.get("/{room_id}", response_model=Room)
-def read_room(room_id: int, db: Session = Depends(get_db)):
-    room = db.query(Room).filter(Room.id == room_id).first()
+def read_room(room_id: int, db: Session = Depends(database.get_db)):
+    room = db.query(models.Room).filter(models.Room.id == room_id).first()
     if room is None:
         raise HTTPException(status_code=404, detail="Room not found")
     
@@ -150,13 +148,13 @@ def read_room(room_id: int, db: Session = Depends(get_db)):
 def update_room(
     room_id: int,
     room: RoomCreate,
-    current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db)
+    current_user: models.User = Depends(auth.get_current_active_user),
+    db: Session = Depends(database.get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    db_room = db.query(Room).filter(Room.id == room_id).first()
+    db_room = db.query(models.Room).filter(models.Room.id == room_id).first()
     if db_room is None:
         raise HTTPException(status_code=404, detail="Room not found")
     
@@ -187,21 +185,21 @@ def update_room(
 @router.delete("/{room_id}")
 def delete_room(
     room_id: int,
-    current_user: User = Depends(get_current_active_user),
-    db: Session = Depends(get_db)
+    current_user: models.User = Depends(auth.get_current_active_user),
+    db: Session = Depends(database.get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
     # First check if the room exists
-    db_room = db.query(Room).filter(Room.id == room_id).first()
+    db_room = db.query(models.Room).filter(models.Room.id == room_id).first()
     if db_room is None:
         raise HTTPException(status_code=404, detail="Room not found")
     
     # Check for active reservations (pending or confirmed)
-    active_reservations = db.query(Reservation).filter(
-        Reservation.room_id == room_id,
-        Reservation.status.in_(["pending", "confirmed"])
+    active_reservations = db.query(models.Reservation).filter(
+        models.Reservation.room_id == room_id,
+        models.Reservation.status.in_(["pending", "confirmed"])
     ).count()
     
     if active_reservations > 0:
@@ -212,9 +210,9 @@ def delete_room(
     
     try:
         # Mark completed/cancelled reservations as having no room (set room_id to null)
-        reservations = db.query(Reservation).filter(
-            Reservation.room_id == room_id,
-            Reservation.status.in_(["cancelled", "completed"])
+        reservations = db.query(models.Reservation).filter(
+            models.Reservation.room_id == room_id,
+            models.Reservation.status.in_(["cancelled", "completed"])
         ).all()
         
         for reservation in reservations:

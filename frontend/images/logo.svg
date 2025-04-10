@@ -1,0 +1,8 @@
+<svg width="120" height="50" viewBox="0 0 120 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M60 10L70 25L60 40L50 25L60 10Z" fill="#E8C547"/>
+  <path d="M31 16H40V19H34.5V22.5H39V25.5H34.5V29H40V32H31V16Z" fill="white"/>
+  <path d="M43 16H52.5V19H46.5V22.5H51.5V25.5H46.5V32H43V16Z" fill="white"/>
+  <path d="M68 16H71.5V22.5H77V16H80.5V32H77V25.5H71.5V32H68V16Z" fill="white"/>
+  <path d="M87 32V16H90.5V23L95.5 16H99.5L94.5 23L100 32H96L92 25.5L90.5 27.5V32H87Z" fill="white"/>
+  <text x="60" y="45" font-family="Arial" font-size="8" fill="white" text-anchor="middle">EUROPE</text>
+</svg> 

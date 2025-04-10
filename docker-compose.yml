@@ -1,38 +1,37 @@
+version: '3.8'
 
 services:
   backend:
     build:
       context: .
-      dockerfile: Dockerfile.backend
+      dockerfile: backend/Dockerfile
     ports:
       - "8000:8000"
-    volumes:
-      - ./backend:/app
+    environment:
+      - DATABASE_URL=mysql+pymysql://user:password@db:3306/hotel_db
     depends_on:
       - db
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+    depends_on:
+      - backend
 
   db:
     image: mysql:8.0
-    container_name: db
     ports:
-      - "3306:3306"
+      - "3307:3306"
     environment:
-      MYSQL_ROOT_PASSWORD: hotel123
-      MYSQL_DATABASE: hotel
+      - MYSQL_ROOT_PASSWORD=rootpassword
+      - MYSQL_DATABASE=hotel_db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=password
     volumes:
-      - db_data:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
-    ports:
-      - "8087:80"
-    environment:
-      PMA_HOST: db
-      PMA_USER: root
-      PMA_PASSWORD: hotel123
-    depends_on:
-      - db
+      - mysql_data:/var/lib/mysql
 
 volumes:
-  db_data:
+  mysql_data: 

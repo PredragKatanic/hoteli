@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - HOTEL EUROPE</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-light">
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <!-- Left nav items -->
+            <div class="collapse navbar-collapse order-1 order-lg-1">
+                <ul class="navbar-nav">
+                    <li class="nav-item nav-item-left">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li class="nav-item nav-item-left">
+                        <a class="nav-link" href="index.html#about">About</a>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Center Logo -->
+            <a class="navbar-brand centered-brand order-2" href="index.html">
+                <img src="images/logo.svg" alt="Hotel Europe" class="navbar-logo">
+            </a>
+            
+            <!-- Mobile Toggle Button -->
+            <button class="navbar-toggler order-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Right nav items -->
+            <div class="collapse navbar-collapse order-4" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item nav-item-right">
+                        <a class="nav-link" href="index.html#rooms">Rooms</a>
+                    </li>
+                    <li class="nav-item nav-item-right">
+                        <a class="nav-link active" href="login.html">Login</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <hr>
+
+    <!-- Login Section -->
+    <section class="login-section py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <div class="card shadow">
+                        <div class="card-body p-5">
+                            <h2 class="text-center mb-4">Welcome Back</h2>
+                            <ul class="nav nav-tabs mb-4" id="loginTabs" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="guest-tab" data-bs-toggle="tab" data-bs-target="#guest" type="button" role="tab">
+                                        Guest Login
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="manager-tab" data-bs-toggle="tab" data-bs-target="#manager" type="button" role="tab">
+                                        Hotel Management
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="loginTabsContent">
+                                <!-- Guest Login Form -->
+                                <div class="tab-pane fade show active" id="guest" role="tabpanel">
+                                    <form id="guestLoginForm">
+                                        <div class="mb-4">
+                                            <label for="guestUsername" class="form-label">Username</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                                <input type="text" class="form-control" id="guestUsername" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="guestPassword" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="guestPassword" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 form-check">
+                                            <input type="checkbox" class="form-check-input" id="rememberMe">
+                                            <label class="form-check-label" for="rememberMe">Remember me</label>
+                                            <a href="#" class="float-end forgot-password">Forgot password?</a>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </div>
+                                        <div class="text-center mt-4">
+                                            <p>Don't have an account? <a href="register.html" class="fw-bold">Register here</a></p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Manager Login Form -->
+                                <div class="tab-pane fade" id="manager" role="tabpanel">
+                                    <form id="managerLoginForm">
+                                        <div class="mb-4">
+                                            <label for="managerUsername" class="form-label">Username</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-user-tie"></i></span>
+                                                <input type="text" class="form-control" id="managerUsername" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4">
+                                            <label for="managerPassword" class="form-label">Password</label>
+                                            <div class="input-group">
+                                                <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                                                <input type="password" class="form-control" id="managerPassword" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-4 form-check">
+                                            <input type="checkbox" class="form-check-input" id="managerRememberMe">
+                                            <label class="form-check-label" for="managerRememberMe">Remember me</label>
+                                            <a href="#" class="float-end forgot-password">Forgot password?</a>
+                                        </div>
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-5 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>HOTEL EUROPE</h5>
+                    <p>Experience luxury and European elegance at its finest. Tradition meets modern comfort in the heart of the city.</p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="me-2"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="me-2"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#about">About</a></li>
+                        <li><a href="index.html#rooms">Rooms</a></li>
+                        <li><a href="index.html#amenities">Amenities</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2"></i> 123 Grand Boulevard, Paris, France</li>
+                        <li><i class="fas fa-phone me-2"></i> +33 1 234 5678</li>
+                        <li><i class="fas fa-envelope me-2"></i> info@hoteleurope.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <h5>Newsletter</h5>
+                    <p>Subscribe to receive special offers and updates</p>
+                    <form class="mt-3">
+                        <div class="input-group mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <hr>
+            <div class="text-center">
+                <p class="copyright mb-0">&copy; 2025 HOTEL EUROPE. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/config.js"></script>
+    <script src="js/login.js"></script>
+    <script src="js/auth-check.js"></script>
+    <script>
+        // Add navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html> 
