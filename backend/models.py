@@ -15,6 +15,9 @@ class RoomCategory(Base):
     
     rooms = relationship("Room", back_populates="category")
 
+# Alias for simpler imports
+Category = RoomCategory
+
 class Room(Base):
     __tablename__ = "rooms"
 

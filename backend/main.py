@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .routes import users, rooms, reservations, auth, categories, overview
-from .config import settings
-from .models import Base
-from .database import engine
+from routes import users, rooms, reservations, auth, categories, overview
+from config import settings
+from models import Base
+from database import engine
 import uvicorn
 
 app = FastAPI(

@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from .. import models, database, auth
-from ..config import settings
+from models import Reservation, User, Room
+from database import get_db
+from auth import get_current_active_user
+from config import settings
 from pydantic import BaseModel
 from datetime import date
 
@@ -39,16 +41,16 @@ class Reservation(ReservationBase):
 @router.post("/", response_model=Reservation)
 def create_reservation(
     reservation: ReservationCreate,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
-    db_reservation = models.Reservation(**reservation.dict(), user_id=current_user.id)
+    db_reservation = Reservation(**reservation.dict(), user_id=current_user.id)
     db.add(db_reservation)
     db.commit()
     db.refresh(db_reservation)
     
     # Fetch the room_number for the newly created reservation
-    room = db.query(models.Room).filter(models.Room.id == db_reservation.room_id).first()
+    room = db.query(Room).filter(Room.id == db_reservation.room_id).first()
     if room:
         db_reservation.room_number = room.room_number
     
@@ -58,22 +60,22 @@ def create_reservation(
 def read_reservations(
     skip: int = 0,
     limit: int = 100,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
     query = db.query(
-        models.Reservation, 
-        models.Room.room_number
+        Reservation, 
+        Room.room_number
     ).join(
-        models.Room, 
-        models.Reservation.room_id == models.Room.id
+        Room, 
+        Reservation.room_id == Room.id
     )
     
     if current_user.role == "manager":
         result = query.offset(skip).limit(limit).all()
     else:
         result = query.filter(
-            models.Reservation.user_id == current_user.id
+            Reservation.user_id == current_user.id
         ).offset(skip).limit(limit).all()
     
     # Add room_number to each reservation
@@ -102,17 +104,17 @@ def read_reservations(
 @router.get("/{reservation_id}", response_model=Reservation)
 def read_reservation(
     reservation_id: int,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
     result = db.query(
-        models.Reservation,
-        models.Room.room_number
+        Reservation,
+        Room.room_number
     ).join(
-        models.Room,
-        models.Reservation.room_id == models.Room.id
+        Room,
+        Reservation.room_id == Room.id
     ).filter(
-        models.Reservation.id == reservation_id
+        Reservation.id == reservation_id
     ).first()
     
     if result is None:
@@ -131,10 +133,10 @@ def read_reservation(
 @router.put("/{reservation_id}/cancel")
 def cancel_reservation(
     reservation_id: int,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
-    reservation = db.query(models.Reservation).filter(models.Reservation.id == reservation_id).first()
+    reservation = db.query(Reservation).filter(Reservation.id == reservation_id).first()
     if reservation is None:
         raise HTTPException(status_code=404, detail="Reservation not found")
     if current_user.role != "manager" and reservation.user_id != current_user.id:
@@ -147,10 +149,10 @@ def cancel_reservation(
 @router.delete("/{reservation_id}")
 def delete_reservation(
     reservation_id: int,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
-    reservation = db.query(models.Reservation).filter(models.Reservation.id == reservation_id).first()
+    reservation = db.query(Reservation).filter(Reservation.id == reservation_id).first()
     if reservation is None:
         raise HTTPException(status_code=404, detail="Reservation not found")
     if current_user.role != "manager":
@@ -164,11 +166,11 @@ def delete_reservation(
 def update_reservation(
     reservation_id: int,
     reservation_update: ReservationBase,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
     # Check if reservation exists
-    db_reservation = db.query(models.Reservation).filter(models.Reservation.id == reservation_id).first()
+    db_reservation = db.query(Reservation).filter(Reservation.id == reservation_id).first()
     if db_reservation is None:
         raise HTTPException(status_code=404, detail="Reservation not found")
     
@@ -184,7 +186,7 @@ def update_reservation(
     db.refresh(db_reservation)
     
     # Fetch the room_number for the updated reservation
-    room = db.query(models.Room).filter(models.Room.id == db_reservation.room_id).first()
+    room = db.query(Room).filter(Room.id == db_reservation.room_id).first()
     if room:
         db_reservation.room_number = room.room_number
     

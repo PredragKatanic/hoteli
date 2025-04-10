@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
-from .. import models, database, auth
+from models import User, RoomCategory as Category
+from database import get_db
+from auth import get_current_active_user
 from pydantic import BaseModel
 
 router = APIRouter(
@@ -26,13 +28,13 @@ class Category(CategoryBase):
 @router.post("/", response_model=Category)
 def create_category(
     category: CategoryCreate,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    db_category = models.RoomCategory(**category.dict())
+    db_category = Category(**category.dict())
     db.add(db_category)
     db.commit()
     db.refresh(db_category)
@@ -40,17 +42,17 @@ def create_category(
 
 @router.get("/", response_model=List[Category])
 def read_categories(
-    db: Session = Depends(database.get_db)
+    db: Session = Depends(get_db)
 ):
-    categories = db.query(models.RoomCategory).all()
+    categories = db.query(Category).all()
     return categories
 
 @router.get("/{category_id}", response_model=Category)
 def read_category(
     category_id: int,
-    db: Session = Depends(database.get_db)
+    db: Session = Depends(get_db)
 ):
-    category = db.query(models.RoomCategory).filter(models.RoomCategory.id == category_id).first()
+    category = db.query(Category).filter(Category.id == category_id).first()
     if category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     return category
@@ -59,13 +61,13 @@ def read_category(
 def update_category(
     category_id: int,
     category: CategoryBase,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    db_category = db.query(models.RoomCategory).filter(models.RoomCategory.id == category_id).first()
+    db_category = db.query(Category).filter(Category.id == category_id).first()
     if db_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     
@@ -79,13 +81,13 @@ def update_category(
 @router.delete("/{category_id}")
 def delete_category(
     category_id: int,
-    current_user: models.User = Depends(auth.get_current_active_user),
-    db: Session = Depends(database.get_db)
+    current_user: User = Depends(get_current_active_user),
+    db: Session = Depends(get_db)
 ):
     if current_user.role != "manager":
         raise HTTPException(status_code=403, detail="Not enough permissions")
     
-    db_category = db.query(models.RoomCategory).filter(models.RoomCategory.id == category_id).first()
+    db_category = db.query(Category).filter(Category.id == category_id).first()
     if db_category is None:
         raise HTTPException(status_code=404, detail="Category not found")
     

@@ -1,18 +1,26 @@
-version: '3.8'
 
 services:
-  db:
-    image: mysql:latest
-    container_name: mysql-db
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
     ports:
-      - "3307:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: admin123
-      MYSQL_DATABASE: hoteli
-      MYSQL_USER: hotel
-      MYSQL_PASSWORD: hotel123
+      - "8000:8000"
     volumes:
-      - mysql_data:/var/lib/mysql
+      - ./backend:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: hotel123
+      MYSQL_DATABASE: hotel
+    volumes:
+      - db_data:/var/lib/mysql
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin:latest
@@ -21,10 +29,10 @@ services:
       - "8087:80"
     environment:
       PMA_HOST: db
-      PMA_USER: hotel
+      PMA_USER: root
       PMA_PASSWORD: hotel123
     depends_on:
       - db
 
 volumes:
-  mysql_data:
+  db_data:
